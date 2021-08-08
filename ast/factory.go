@@ -12,22 +12,20 @@ func ToDemoNode(n *Node) DemoNode {
 	switch n.Type() {
 	case demo.Command:
 		return &Command{n}
-	case demo.CommandData:
-		return &CommandData{n}
+	case demo.CommandTypeEnum:
+		return &CommandTypeEnum{n}
+	case demo.EventData:
+		return &EventData{n}
+	case demo.EventType:
+		return &EventType{n}
 	case demo.File:
 		return &File{n}
 	case demo.FileHeader:
 		return &FileHeader{n}
-	case demo.GameTickProgress:
-		return &GameTickProgress{n}
-	case demo.LParam:
-		return &LParam{n}
-	case demo.MessageType:
-		return &MessageType{n}
-	case demo.MsgTypeEnum:
-		return &MsgTypeEnum{n}
-	case demo.WParam:
-		return &WParam{n}
+	case demo.FloatLit:
+		return &FloatLit{n}
+	case demo.IntLit:
+		return &IntLit{n}
 	case demo.NoType:
 		return nilInstance
 	}

@@ -44,58 +44,47 @@ File -> File
 	: FileHeader Commands=Command*
 ;
 
+# --- [ Literals ] -------------------------------------------------------------
+
+IntLit -> IntLit
+	: int_lit_tok
+;
+
+FloatLit -> FloatLit
+	: float_lit_tok
+	| int_lit_tok     # to support short form float for 0 and 1.
+;
+
 # --- [ File header ] ----------------------------------------------------------
 
+# FileHeader
+#    // File format version.
+#    VersionNum
+#    // Save number (e.g. "single_#.sv").
+#    SaveNum
+#    // Screen dimensions.
+#    ScreenWidth, ScreenHeight
 FileHeader -> FileHeader
-	: VersionNum ',' SaveNum ',' ScreenWidth ',' ScreenHeight _new_line
-;
-
-# File format version.
-VersionNum
-	: int_lit_tok
-;
-
-# Save number (e.g. "single_#.sv")
-SaveNum
-	: int_lit_tok
-;
-
-# Screen dimensions.
-ScreenWidth
-	: int_lit_tok
-;
-
-ScreenHeight
-	: int_lit_tok
+	: VersionNum=IntLit ',' SaveNum=IntLit ',' ScreenWidth=IntLit ',' ScreenHeight=IntLit _new_line
 ;
 
 # --- [ Commands ] -------------------------------------------------------------
 
+# Command
+#    // Progress to next game tick in range [0.0, 1.0].
+#    GameTickProgress
 Command -> Command
-	: MsgTypeEnum ',' GameTickProgress CommandData=(',' CommandData)? _new_line
+	: CommandType=CommandTypeEnum ',' GameTickProgress=FloatLit EventData=(',' EventData)? _new_line
 ;
 
-MsgTypeEnum -> MsgTypeEnum
+CommandTypeEnum -> CommandTypeEnum
 	: int_lit_tok
 ;
 
-# Progress to next game tick in range [0.0, 1.0].
-GameTickProgress -> GameTickProgress
-	: float_lit_tok
+EventData -> EventData
+	: EventType=EventType ',' WParam=IntLit ',' LParam=IntLit
 ;
 
-CommandData -> CommandData
-	: MessageType ',' WParam ',' LParam
-;
-
-MessageType -> MessageType
+EventType -> EventType
 	: int_lit_tok # uint32
-;
-
-WParam -> WParam
-	: int_lit_tok # int32
-;
-
-LParam -> LParam
-	: int_lit_tok # int32
 ;

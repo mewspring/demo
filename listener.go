@@ -13,28 +13,26 @@ type Listener func(t NodeType, offset, endoffset int)
 const (
 	NoType NodeType = iota
 	File            // FileHeader Commands=(Command)*
-	FileHeader
-	Command // MsgTypeEnum GameTickProgress CommandData?
-	MsgTypeEnum
-	GameTickProgress
-	CommandData // MessageType WParam LParam
-	MessageType
-	WParam
-	LParam
+	IntLit
+	FloatLit
+	FileHeader // VersionNum=IntLit SaveNum=IntLit ScreenWidth=IntLit ScreenHeight=IntLit
+	Command    // CommandType=CommandTypeEnum GameTickProgress=FloatLit EventData?
+	CommandTypeEnum
+	EventData // EventType WParam=IntLit LParam=IntLit
+	EventType
 	NodeTypeMax
 )
 
 var nodeTypeStr = [...]string{
 	"NONE",
 	"File",
+	"IntLit",
+	"FloatLit",
 	"FileHeader",
 	"Command",
-	"MsgTypeEnum",
-	"GameTickProgress",
-	"CommandData",
-	"MessageType",
-	"WParam",
-	"LParam",
+	"CommandTypeEnum",
+	"EventData",
+	"EventType",
 }
 
 func (t NodeType) String() string {

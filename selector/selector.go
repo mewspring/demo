@@ -9,16 +9,15 @@ import (
 type Selector func(nt demo.NodeType) bool
 
 var (
-	Any              = func(t demo.NodeType) bool { return true }
-	Command          = func(t demo.NodeType) bool { return t == demo.Command }
-	CommandData      = func(t demo.NodeType) bool { return t == demo.CommandData }
-	File             = func(t demo.NodeType) bool { return t == demo.File }
-	FileHeader       = func(t demo.NodeType) bool { return t == demo.FileHeader }
-	GameTickProgress = func(t demo.NodeType) bool { return t == demo.GameTickProgress }
-	LParam           = func(t demo.NodeType) bool { return t == demo.LParam }
-	MessageType      = func(t demo.NodeType) bool { return t == demo.MessageType }
-	MsgTypeEnum      = func(t demo.NodeType) bool { return t == demo.MsgTypeEnum }
-	WParam           = func(t demo.NodeType) bool { return t == demo.WParam }
+	Any             = func(t demo.NodeType) bool { return true }
+	Command         = func(t demo.NodeType) bool { return t == demo.Command }
+	CommandTypeEnum = func(t demo.NodeType) bool { return t == demo.CommandTypeEnum }
+	EventData       = func(t demo.NodeType) bool { return t == demo.EventData }
+	EventType       = func(t demo.NodeType) bool { return t == demo.EventType }
+	File            = func(t demo.NodeType) bool { return t == demo.File }
+	FileHeader      = func(t demo.NodeType) bool { return t == demo.FileHeader }
+	FloatLit        = func(t demo.NodeType) bool { return t == demo.FloatLit }
+	IntLit          = func(t demo.NodeType) bool { return t == demo.IntLit }
 )
 
 func OneOf(types ...demo.NodeType) Selector {

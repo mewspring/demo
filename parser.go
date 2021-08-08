@@ -46,7 +46,7 @@ const (
 )
 
 func (p *Parser) Parse(lexer *Lexer) error {
-	return p.parse(0, 34, lexer)
+	return p.parse(0, 30, lexer)
 }
 
 func (p *Parser) parse(start, end int8, lexer *Lexer) error {
