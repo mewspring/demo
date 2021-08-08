@@ -1,0 +1,3 @@
+[submodule "tools/textmapper"]
+	path = tools/textmapper
+	url = https://github.com/inspirer/textmapper
