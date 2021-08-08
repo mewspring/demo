@@ -37,10 +37,12 @@ func translateCommand(astCommand ast.Command) Command {
 	switch commandType {
 	case CommandTypeGameTick:
 		return GameTickCommand{
+			CommandType:      CommandTypeGameTick,
 			GameTickProgress: floatLit(astCommand.GameTickProgress()),
 		}
 	case CommandTypeRendering:
 		return RenderingCommand{
+			CommandType:      CommandTypeRendering,
 			GameTickProgress: floatLit(astCommand.GameTickProgress()),
 		}
 	case CommandTypeEvent:
@@ -49,6 +51,7 @@ func translateCommand(astCommand ast.Command) Command {
 			panic(fmt.Errorf("missing event data for event command"))
 		}
 		return EventCommand{
+			CommandType:      CommandTypeEvent,
 			GameTickProgress: floatLit(astCommand.GameTickProgress()),
 			EventType:        eventTypeFromString(eventData.EventType().Text()),
 			WParam:           int32(intLit(eventData.WParam())),
@@ -94,6 +97,7 @@ func eventTypeFromString(s string) EventType {
 	return EventType(x)
 }
 
+// intLit converts the given integer literal to the corresponding integer.
 func intLit(n ast.IntLit) int {
 	s := n.Text()
 	x, err := strconv.Atoi(s)
@@ -103,6 +107,8 @@ func intLit(n ast.IntLit) int {
 	return x
 }
 
+// floatLit converts the given floating-point literal to the corresponding
+// float.
 func floatLit(n ast.FloatLit) float64 {
 	s := n.Text()
 	x1, err := strconv.ParseFloat(s, 64)

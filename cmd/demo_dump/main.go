@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/kr/pretty"
+	"github.com/mewkiz/pkg/jsonutil"
 	"github.com/mewkiz/pkg/term"
 	"github.com/pkg/errors"
 )
@@ -45,6 +45,9 @@ func parseDemo(demoPath string) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	pretty.Println("file:", file)
+	//pretty.Println("file:", file)
+	if err := jsonutil.Write(os.Stdout, file); err != nil {
+		return errors.WithStack(err)
+	}
 	return nil
 }
