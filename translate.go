@@ -50,13 +50,60 @@ func translateCommand(astCommand ast.Command) Command {
 		if !ok {
 			panic(fmt.Errorf("missing event data for event command"))
 		}
-		return EventCommand{
+		wparam := uint32(intLit(eventData.WParam()))
+		lparam := uint32(intLit(eventData.LParam()))
+		event := EventCommand{
 			CommandType:      CommandTypeEvent,
 			GameTickProgress: floatLit(astCommand.GameTickProgress()),
 			DvlEventType:     dvlEventTypeFromString(eventData.EventType().Text()),
-			WParam:           uint32(intLit(eventData.WParam())),
-			LParam:           uint32(intLit(eventData.LParam())),
 		}
+
+		switch event.DvlEventType {
+		case DvlEventTypeMouseMove:
+			x, y := mousePos(uint32(lparam))
+			event.X = x
+			event.Y = y
+			// TODO: figure out how to handle wParam: mods.
+		case DvlEventTypeMouseButtonLeftDown:
+			x, y := mousePos(uint32(lparam))
+			event.X = x
+			event.Y = y
+			// TODO: figure out how to handle wParam: mods.
+		case DvlEventTypeMouseButtonLeftUp:
+			x, y := mousePos(uint32(lparam))
+			event.X = x
+			event.Y = y
+			// TODO: figure out how to handle wParam: mods.
+		case DvlEventTypeMouseButtonRightDown:
+			x, y := mousePos(uint32(lparam))
+			event.X = x
+			event.Y = y
+			// TODO: figure out how to handle wParam: mods.
+		case DvlEventTypeMouseButtonRightUp:
+			x, y := mousePos(uint32(lparam))
+			event.X = x
+			event.Y = y
+			// TODO: figure out how to handle wParam: mods.
+		case DvlEventTypeKeyDown:
+			key := int(wparam)
+			event.Key = key
+			// TODO: figure out how to handle lParam: mods.
+		case DvlEventTypeKeyUp:
+			key := int(wparam)
+			event.Key = key
+			// TODO: figure out how to handle lParam: mods.
+		case DvlEventTypeChar:
+			r := rune(wparam)
+			event.Rune = r
+		case DvlEventTypeQuit, DvlEventTypeCaptureChanged, DvlEventTypePaint, DvlEventTypeQueryEndSession:
+			// nothing to do.
+		default:
+			if event.DvlEventType&DvlEventTypeTrigMsgUser != DvlEventTypeTrigMsgUser {
+				panic(fmt.Errorf("support for event type %d not yet implemented", event.DvlEventType))
+			}
+		}
+
+		return event
 	default:
 		panic(fmt.Errorf("support for command type %d not yet implemented", commandType))
 	}
@@ -120,4 +167,11 @@ func floatLit(n ast.FloatLit) float64 {
 		return float64(x2)
 	}
 	return x1
+}
+
+// mousePos returns the X-Y mouse coordinate corresponding to the given lparam.
+func mousePos(lparam uint32) (x, y int) {
+	x = int(lparam & 0xFFFF)
+	y = int(lparam>>16) & 0xFFFF
+	return x, y
 }

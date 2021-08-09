@@ -84,9 +84,38 @@ type EventCommand struct {
 	GameTickProgress float64 `json:"game_tick_progress"`
 	// Event type.
 	DvlEventType DvlEventType `json:"event_type"`
-	// Event parameters.
-	WParam uint32 `json:"wparam"`
-	LParam uint32 `json:"lparam"`
+	// Mouse position. Encoded as two uint16 values in LParam.
+	//
+	// Used by:
+	//    * DvlEventTypeMouseMove
+	//    * DvlEventTypeMouseButtonLeftDown
+	//    * DvlEventTypeMouseButtonLeftUp
+	//    * DvlEventTypeMouseButtonRightDown
+	//    * DvlEventTypeMouseButtonRightUp
+	X int `json:"x,omitempty"`
+	Y int `json:"y,omitempty"`
+	// Keyboard key. Encoded in WParam.
+	//
+	// Used by:
+	//    * DvlEventTypeKeyDown
+	//    * DvlEventTypeKeyUp
+	Key int `json:"key,omitempty"`
+	// Typed character. Encoded in WParam.
+	//
+	// Used by:
+	//    * DvlEventTypeChar
+	Rune rune `json:"rune,omitempty"`
+	// Bitfield of keyboard modifiers. Encoded in WParam or LParam.
+	//
+	// Used by:
+	//    * DvlEventTypeMouseMove
+	//    * DvlEventTypeMouseButtonLeftDown
+	//    * DvlEventTypeMouseButtonLeftUp
+	//    * DvlEventTypeMouseButtonRightDown
+	//    * DvlEventTypeMouseButtonRightUp
+	//    * DvlEventTypeKeyDown
+	//    * DvlEventTypeKeyUp
+	Mods uint32 `json:"mods,omitempty"`
 }
 
 // DvlEventType specifies the event type of a message command.
