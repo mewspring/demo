@@ -2,12 +2,14 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
 
 	"github.com/mewkiz/pkg/jsonutil"
 	"github.com/mewkiz/pkg/term"
+	"github.com/mewspring/demo"
 	"github.com/pkg/errors"
 )
 
@@ -41,13 +43,13 @@ func main() {
 // parseDemo parses the given demo file.
 func parseDemo(demoPath string) error {
 	dbg.Printf("parsing %q", demoPath)
-	file, err := ParseFile(demoPath)
+	file, err := demo.ParseFile(demoPath)
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	//pretty.Println("file:", file)
 	if err := jsonutil.Write(os.Stdout, file); err != nil {
 		return errors.WithStack(err)
 	}
+	fmt.Fprintln(os.Stdout) // add trailing newline.
 	return nil
 }

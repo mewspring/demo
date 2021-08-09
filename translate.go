@@ -1,4 +1,4 @@
-package main
+package demo
 
 import (
 	"fmt"
@@ -53,9 +53,9 @@ func translateCommand(astCommand ast.Command) Command {
 		return EventCommand{
 			CommandType:      CommandTypeEvent,
 			GameTickProgress: floatLit(astCommand.GameTickProgress()),
-			EventType:        eventTypeFromString(eventData.EventType().Text()),
-			WParam:           int32(intLit(eventData.WParam())),
-			LParam:           int32(intLit(eventData.LParam())),
+			DvlEventType:     dvlEventTypeFromString(eventData.EventType().Text()),
+			WParam:           uint32(intLit(eventData.WParam())),
+			LParam:           uint32(intLit(eventData.LParam())),
 		}
 	default:
 		panic(fmt.Errorf("support for command type %d not yet implemented", commandType))
@@ -87,14 +87,14 @@ func commandTypeFromString(s string) CommandType {
 	}
 }
 
-// eventTypeFromString converts the given string to the corresponding event type
-// enum.
-func eventTypeFromString(s string) EventType {
+// dvlEventTypeFromString converts the given string to the corresponding event
+// type enum.
+func dvlEventTypeFromString(s string) DvlEventType {
 	x, err := strconv.ParseUint(s, 10, 32)
 	if err != nil {
 		panic(fmt.Errorf("unable to parse event type %q; %+v", s, err))
 	}
-	return EventType(x)
+	return DvlEventType(x)
 }
 
 // intLit converts the given integer literal to the corresponding integer.
