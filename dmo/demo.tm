@@ -1,7 +1,7 @@
 language demo(go);
 
 lang = "demo"
-package = "github.com/mewspring/demo"
+package = "github.com/mewspring/demo/dmo"
 eventBased = true
 eventFields = true
 eventAST = true

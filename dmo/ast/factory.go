@@ -5,28 +5,28 @@ package ast
 import (
 	"fmt"
 
-	"github.com/mewspring/demo"
+	"github.com/mewspring/demo/dmo"
 )
 
 func ToDemoNode(n *Node) DemoNode {
 	switch n.Type() {
-	case demo.Command:
+	case dmo.Command:
 		return &Command{n}
-	case demo.CommandTypeEnum:
+	case dmo.CommandTypeEnum:
 		return &CommandTypeEnum{n}
-	case demo.EventData:
+	case dmo.EventData:
 		return &EventData{n}
-	case demo.EventType:
+	case dmo.EventType:
 		return &EventType{n}
-	case demo.File:
+	case dmo.File:
 		return &File{n}
-	case demo.FileHeader:
+	case dmo.FileHeader:
 		return &FileHeader{n}
-	case demo.FloatLit:
+	case dmo.FloatLit:
 		return &FloatLit{n}
-	case demo.IntLit:
+	case dmo.IntLit:
 		return &IntLit{n}
-	case demo.NoType:
+	case dmo.NoType:
 		return nilInstance
 	}
 	panic(fmt.Errorf("ast: unknown node type %v", n.Type()))

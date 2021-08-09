@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/mewspring/demo/ast"
+	"github.com/mewspring/demo/dmo/ast"
 )
 
 // translate translates the given AST file into a corresponding demo file.

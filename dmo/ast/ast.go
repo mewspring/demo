@@ -3,7 +3,7 @@
 package ast
 
 import (
-	"github.com/mewspring/demo/selector"
+	"github.com/mewspring/demo/dmo/selector"
 )
 
 // Interfaces.

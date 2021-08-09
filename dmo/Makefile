@@ -1,4 +1,4 @@
-TM_DIR=./tools/textmapper
+TM_DIR=../tools/textmapper
 
 all: gen
 

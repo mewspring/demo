@@ -6,8 +6,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/mewspring/demo"
-	"github.com/mewspring/demo/selector"
+	"github.com/mewspring/demo/dmo"
+	"github.com/mewspring/demo/dmo/selector"
 )
 
 // Tree is a parse tree for some content.
@@ -40,7 +40,7 @@ func (t *Tree) Text() string {
 
 // Node is an AST node.
 type Node struct {
-	t          demo.NodeType
+	t          dmo.NodeType
 	offset     int
 	endoffset  int
 	parent     *Node
@@ -55,9 +55,9 @@ func (n *Node) IsValid() bool {
 }
 
 // Type returns
-func (n *Node) Type() demo.NodeType {
+func (n *Node) Type() dmo.NodeType {
 	if n == nil {
-		return demo.NoType
+		return dmo.NoType
 	}
 	return n.t
 }

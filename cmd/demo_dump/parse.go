@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"time"
 
-	"github.com/mewspring/demo/ast"
+	"github.com/mewspring/demo/dmo/ast"
 	"github.com/pkg/errors"
 )
 

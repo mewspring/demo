@@ -5,14 +5,14 @@ package ast
 import (
 	"errors"
 
-	"github.com/mewspring/demo"
+	"github.com/mewspring/demo/dmo"
 )
 
 // Parse parses a given utf-8 content into an AST.
 func Parse(path, content string) (*Tree, error) {
-	var l demo.Lexer
+	var l dmo.Lexer
 	l.Init(content)
-	var p demo.Parser
+	var p dmo.Parser
 	b := newBuilder(path, content)
 	p.Init(b.addNode)
 	err := p.Parse(&l)
@@ -35,7 +35,7 @@ func newBuilder(path, content string) *builder {
 	}
 }
 
-func (b *builder) addNode(t demo.NodeType, offset, endoffset int) {
+func (b *builder) addNode(t dmo.NodeType, offset, endoffset int) {
 	start := len(b.stack)
 	end := start
 	for start > 0 && b.stack[start-1].offset >= offset {
